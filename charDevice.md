@@ -24,5 +24,5 @@ module_exit(simple_exit);
 - Viết hàm init(hàm này sẽ được chạy dầu tiên khi module được load lên và nó sẽ in ra dòng chữ ).
 - Viết hàm để exit(sẽ được chạy khi người dùng unload module)
 - Tiến hành đăng ký hàm với kernel bằng cách truyền tên hàm vào
-**Lưu ý: Cần tuân thủ đúng các prototype của kernel từ hàm init đến exit chỉ được tùy chỉnh tên hàm**
+### **Lưu ý: Cần tuân thủ đúng các prototype của kernel từ hàm init đến exit chỉ được tùy chỉnh tên hàm**
   
