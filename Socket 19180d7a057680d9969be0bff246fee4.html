@@ -1,0 +1,1125 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Socket</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="19180d7a-0576-80d9-969b-e0bff246fee4" class="page sans"><header><h1 class="page-title">Socket</h1><p class="page-description"></p></header><div class="page-body"><p id="19180d7a-0576-8035-a40b-c35ede9968da" class="">Truyền thông dữ liệu giữa 2 máy tính riêng biệt thì ta có thể dùng Socket</p><figure id="19180d7a-0576-80fd-8a83-dab4898fba0c" class="image"><a href="image.png"><img style="width:709.9750366210938px" src="image.png"/></a></figure><p id="19180d7a-0576-805a-820d-f5710e2620cb" class="">Socket cũng vậy nó là một loại file đặc biệt</p><p id="19180d7a-0576-80d5-8703-e704af945db1" class="">Socket được đại diển bởi 3 thông tin rất quan trọng:</p><ul id="19180d7a-0576-80d0-8f9f-e13f912caca2" class="bulleted-list"><li style="list-style-type:disc">Domain</li></ul><ul id="19180d7a-0576-80ae-ac48-d7d209d00f6e" class="bulleted-list"><li style="list-style-type:disc">Type </li></ul><ul id="19180d7a-0576-80ec-968d-c377fef15345" class="bulleted-list"><li style="list-style-type:disc">Protocol</li></ul><h3 id="19180d7a-0576-80be-98a2-dcd550db4eca" class="">Domain</h3><figure id="19180d7a-0576-806b-ac2c-f1e2abd54107" class="image"><a href="image%201.png"><img style="width:709.9750366210938px" src="image%201.png"/></a></figure><p id="19180d7a-0576-8043-bfb7-fdb5d4f1ab24" class="">Domain là tên miền, dùng cho tiến trình cần giao tiếp trên cùng một máy hoặc khác máy đều được</p><p id="19180d7a-0576-8019-9144-fd9bcbe2c50d" class="">Có 2 loại domain chính là :</p><ul id="19180d7a-0576-80fb-aba2-c7a04691d6a9" class="bulleted-list"><li style="list-style-type:disc">Internet Domain: Giao tiếp trên nhiều máy khác nhau, cũng có thể giao tiếp trên cùng một máy. Internet domain thì được chia làm 2 loại:<ul id="19180d7a-0576-8073-bd75-de2850dacf79" class="bulleted-list"><li style="list-style-type:circle">IPv4: </li></ul><ul id="19180d7a-0576-804d-aa61-d1fab550a34a" class="bulleted-list"><li style="list-style-type:circle">IPv6:</li></ul></li></ul><ul id="19180d7a-0576-8048-a327-cf7f93fc962b" class="bulleted-list"><li style="list-style-type:disc">UNIX Domain: Giao tiếp giữa các tiến trình trên cùng một máy, đại điện là một cái đường dẫn một cái file thôi </li></ul><h3 id="19180d7a-0576-80f3-bdb9-e44310c3460a" class="">Type</h3><figure id="19180d7a-0576-8059-88a4-c0427943bb4c" class="image"><a href="image%202.png"><img style="width:709.9625244140625px" src="image%202.png"/></a></figure><p id="19180d7a-0576-8073-9c46-c8219bd69792" class="">Mô tả cơ chế truyền thông tin có 2 loại phổ biến là:</p><ul id="19180d7a-0576-80e1-8455-cc96f7326ffa" class="bulleted-list"><li style="list-style-type:disc">Stream: dựa trên giao thức TCP, thông qua bắt tay 3 bước, gọi , xác nhận, gửi nên tốc độ chậm hơn UDP, nhưng tin cậy và an toàn hơn nhiều. Stream dùng truyền dữ liệu dạng dòng theo chuỗi bit, ví dụ như video, audio đòi hỏi liên tục. Còn bên Audio hay Video thì chỉ cần trễ 10-20s là ko ổn rồi. </li></ul><ul id="19180d7a-0576-80ed-9a30-ed3b5d2b8901" class="bulleted-list"><li style="list-style-type:disc">Datagram: dựa trên giao thức UDP, chả quan tâm chỉ cần gửi liên tục thôi. Datagram tức là gói tin nhắn tin, không cần dữ liệu phải truyền liên tục liên tục. Ví dụ ta nhắn tin rồi 30s sau ta mới nhắn nữa, thậm chí cả vài phút sau mới nhắn tiếp.</li></ul><p id="19180d7a-0576-8035-935c-f387d6fb2d15" class="">Ta có thể dùng các loại trên để chia thành các loại cơ bản:</p><ul id="19180d7a-0576-8045-b4d5-d3532bb5914b" class="bulleted-list"><li style="list-style-type:disc">Unix nhưng truyền theo kiểu Stream: Unix Stream Socket</li></ul><ul id="19180d7a-0576-80d6-a411-e1ecf65b97d9" class="bulleted-list"><li style="list-style-type:disc">Unix nhưng truyền theo kiểu Datagram: Unix Datagram Socket</li></ul><ul id="19180d7a-0576-802a-9d99-f197b96e7373" class="bulleted-list"><li style="list-style-type:disc">Internet nhưng truyền theo kiểu Stream: IPv4 Stream Socket</li></ul><ul id="19180d7a-0576-8053-a7bf-e940ea9919ad" class="bulleted-list"><li style="list-style-type:disc">Internet nhưng truyền theo kiểu Datagram: IPv4 Datagram Socket</li></ul><ul id="19180d7a-0576-80c6-8ce2-ce41c8478be8" class="bulleted-list"><li style="list-style-type:disc">Internet nhưng truyền theo kiểu Stream: IPv6 Stream Socket ít dùng</li></ul><ul id="19180d7a-0576-8001-b3a6-c98548ba86dc" class="bulleted-list"><li style="list-style-type:disc">Internet nhưng truyền theo kiểu Datagram: IPv6 Datagram Socket ít dùng</li></ul><p id="19180d7a-0576-803e-9d75-f839d0fa5c2e" class="">
+</p><h3 id="19180d7a-0576-8083-a4c4-d80ca2e1b808" class="">Protocol</h3><figure id="19180d7a-0576-804d-b859-d39ac5978704" class="image"><a href="image%203.png"><img style="width:709.9750366210938px" src="image%203.png"/></a></figure><p id="19180d7a-0576-8089-9b85-cfa723c78b74" class="">Nếu chọn Unix Domain thì ko cần quan tâm lắm về protocol</p><p id="19180d7a-0576-80a9-b172-d064839c27ac" class="">Đối với mỗi loại trên thì sẽ có một dạng protocol đóng gói nhất định </p><p id="19180d7a-0576-80c6-864b-e0615c85ab23" class=""><strong>Đi Làm sau về mạng thì sẽ học sâu về:</strong></p><ul id="19180d7a-0576-8035-a999-f7644e62281d" class="bulleted-list"><li style="list-style-type:disc">Raw Socket</li></ul><ul id="19180d7a-0576-8097-b48f-f67751308c04" class="bulleted-list"><li style="list-style-type:disc">Netlink Socket: là cơ chế cho phép giao tiếp giữa User và Kernel space</li></ul><p id="19180d7a-0576-800f-af64-c860679b2d66" class="">Còn nhiều loại socket khác nữa</p><h3 id="19180d7a-0576-80b0-bb7a-d812792cb764" class="">Flow hoạt động </h3><figure id="19180d7a-0576-805a-b79d-da22337b824b" class="image"><a href="image%204.png"><img style="width:709.9750366210938px" src="image%204.png"/></a></figure><p id="19180d7a-0576-80d7-b568-ea439269b3f9" class=""><strong>UDP</strong> là dạng dễ triển khai và đọc nhất </p><p id="19180d7a-0576-8061-9f48-cbd84e9b9682" class=""><strong>TCP</strong> thì phức tạp hơn trong đó: IPv4 Stream Socket là phức tạp nhất chỉ cần hiểu thằng này xong thì quay lại đọc 3 thằng kia rất là dễ</p><h3 id="19180d7a-0576-808d-a8b8-dc169e439dcb" class="">Các bước và giải thích chi tiết</h3><h3 id="19180d7a-0576-8048-853a-ea55834da9dc" class="">Phía Server(Passive Socket)</h3><ol type="1" id="19180d7a-0576-8073-8679-fce1b81e6308" class="numbered-list" start="1"><li>Tạo socket</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8011-9485-f9d879063420" class="code"><code class="language-C">int socket(int domain, int type, int protocol);</code></pre><h3 id="19180d7a-0576-80e8-89fc-d7d7cc6df9f7" class="">Tham số:</h3><ul id="19180d7a-0576-807e-876b-d1440df94beb" class="bulleted-list"><li style="list-style-type:disc"><strong>domain</strong>: Chỉ định họ giao thức<ul id="19180d7a-0576-8042-99e5-d870ddee23a5" class="bulleted-list"><li style="list-style-type:circle"><code>AF_INET</code>: IPv4</li></ul><ul id="19180d7a-0576-80ee-be7d-e99963f87b8a" class="bulleted-list"><li style="list-style-type:circle"><code>AF_INET6</code>: IPv6</li></ul><ul id="19180d7a-0576-80db-b139-dfdf889dfc14" class="bulleted-list"><li style="list-style-type:circle"><code>AF_UNIX</code>: Unix domain sockets (giao tiếp nội bộ)</li></ul></li></ul><ul id="19180d7a-0576-80c3-8225-f8899914e32b" class="bulleted-list"><li style="list-style-type:disc"><strong>type</strong>: Kiểu socket<ul id="19180d7a-0576-8069-8ab7-faf40599c3c1" class="bulleted-list"><li style="list-style-type:circle"><code>SOCK_STREAM</code>: TCP - truyền tin cậy, theo luồng</li></ul><ul id="19180d7a-0576-80e3-8e69-f16742bbcc40" class="bulleted-list"><li style="list-style-type:circle"><code>SOCK_DGRAM</code>: UDP - không đảm bảo, theo gói</li></ul><ul id="19180d7a-0576-80b3-8e70-cce27cd21524" class="bulleted-list"><li style="list-style-type:circle"><code>SOCK_RAW</code>: Truy cập trực tiếp tầng network</li></ul></li></ul><ul id="19180d7a-0576-804a-947d-d51a51a2891e" class="bulleted-list"><li style="list-style-type:disc"><strong>protocol</strong>: Thường để 0 (tự động chọn)</li></ul><h3 id="19180d7a-0576-800f-b0d0-d597ff797de7" class="">Giá trị trả về:</h3><ul id="19180d7a-0576-8024-99d2-efa9325e31a3" class="bulleted-list"><li style="list-style-type:disc">Thành công: File descriptor (số nguyên dương)</li></ul><ul id="19180d7a-0576-800b-b056-f44ae51fdba7" class="bulleted-list"><li style="list-style-type:disc">Thất bại: -1 (kiểm tra errno)</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80d2-8d14-c836ab2eaa49" class="code"><code class="language-C">int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+if (sockfd &lt; 0) {
+    perror(&quot;socket creation failed&quot;);
+    exit(EXIT_FAILURE);
+}</code></pre><ol type="1" id="19180d7a-0576-80d6-868f-d0d4f1d7ee0e" class="numbered-list" start="2"><li>bind()</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80c5-9902-ff09e235a8b3" class="code"><code class="language-C">int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);</code></pre><ul id="19180d7a-0576-80e5-9dcd-dda8c39a7cca" class="bulleted-list"><li style="list-style-type:disc">Gắn socket với một địa chỉ IP và port cụ thể</li></ul><ul id="19180d7a-0576-804e-adc0-f55132ee3292" class="bulleted-list"><li style="list-style-type:disc"><code>sockfd</code>: File descriptor từ socket()</li></ul><ul id="19180d7a-0576-8030-8f2b-d9287956ee5c" class="bulleted-list"><li style="list-style-type:disc"><code>addr</code>: Cấu trúc chứa địa chỉ IP và port</li></ul><ul id="19180d7a-0576-80bb-80a8-cfeda963bce1" class="bulleted-list"><li style="list-style-type:disc">Server cần bind() để client biết kết nối đến đâu</li></ul><h3 id="19180d7a-0576-807a-a00c-de53bcdeef29" class="">Tham số:</h3><ul id="19180d7a-0576-80d9-bec3-d37b26639ca1" class="bulleted-list"><li style="list-style-type:disc"><strong>sockfd</strong>: File descriptor từ socket()</li></ul><ul id="19180d7a-0576-8065-8c76-c865a3f46987" class="bulleted-list"><li style="list-style-type:disc"><strong>addr</strong>: Con trỏ đến cấu trúc địa chỉ</li></ul><ul id="19180d7a-0576-80d7-b5aa-f17c9f21ece7" class="bulleted-list"><li style="list-style-type:disc"><strong>addrlen</strong>: Kích thước của cấu trúc địa chỉ</li></ul><h3 id="19180d7a-0576-807c-a17a-f4f988e8c8f9" class=""><strong>Tại sao cần dùng </strong><code><strong>memset()</strong></code><strong>?</strong></h3><p id="19180d7a-0576-80ea-8e70-fb91a0179960" class="">Trong lập trình mạng với socket, việc khởi tạo struct <code>sockaddr_in</code> bằng <code>memset()</code> giúp:</p><ol type="1" id="19180d7a-0576-807b-aa22-ed585180ae91" class="numbered-list" start="1"><li><strong>Tránh giá trị rác</strong>: Vì <code>server_addr</code> có thể chứa dữ liệu ngẫu nhiên nếu không khởi tạo.</li></ol><ol type="1" id="19180d7a-0576-803a-8b04-ff8e0491cecd" class="numbered-list" start="2"><li><strong>Giúp thiết lập giá trị mặc định</strong>: Khi tất cả phần tử là <code>0</code>, bạn có thể chỉ cần đặt các giá trị quan trọng như <code>sin_family</code>, <code>sin_port</code>, <code>sin_addr</code>.</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8051-91ad-dab87c8d07ff" class="code"><code class="language-C">#include &lt;string.h&gt;
+void *memset(void *ptr, int value, size_t num);</code></pre><figure id="19180d7a-0576-802e-a80f-d88a81f7fd64" class="image"><a href="image%205.png"><img style="width:709.9874877929688px" src="image%205.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8020-86a5-c127f129bb54" class="code"><code class="language-C">struct sockaddr_in {
+    short            sin_family;   // AF_INET
+    unsigned short   sin_port;     // Port number (htons())
+    struct in_addr   sin_addr;     // IPv4 address
+    char             sin_zero[8];  // Padding
+};</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8083-9897-c4e7081b7169" class="code"><code class="language-C">struct sockaddr_in server_addr;
+memset(&amp;server_addr, 0, sizeof(server_addr));
+server_addr.sin_family = AF_INET;
+server_addr.sin_addr.s_addr = INADDR_ANY;  // 0.0.0.0
+server_addr.sin_port = htons(8080);        // Port 8080
+
+if (bind(sockfd, (struct sockaddr *)&amp;server_addr, sizeof(server_addr)) &lt; 0) {
+    perror(&quot;bind failed&quot;);
+    exit(EXIT_FAILURE);
+}</code></pre><ol type="1" id="19180d7a-0576-8055-90e6-fb918fddc146" class="numbered-list" start="3"><li>Listen()</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80c4-b489-cc0f8378a5ab" class="code"><code class="language-C">int listen(int sockfd, int backlog);</code></pre><ul id="19180d7a-0576-8016-9879-ed57413b6a2f" class="bulleted-list"><li style="list-style-type:disc">Chuyển socket sang trạng thái lắng nghe kết nối</li></ul><ul id="19180d7a-0576-8068-b5cd-f5f54a1115ae" class="bulleted-list"><li style="list-style-type:disc"><code>backlog</code>: Số lượng kết nối tối đa có thể xếp hàng chờ</li></ul><ul id="19180d7a-0576-80e7-8109-ef1a9ed1e391" class="bulleted-list"><li style="list-style-type:disc">Socket chuyển từ trạng thái CLOSED sang LISTEN</li></ul><h3 id="19180d7a-0576-8051-8019-f1993b233bb9" class="">Tham số:</h3><ul id="19180d7a-0576-805e-bf37-c649acc75467" class="bulleted-list"><li style="list-style-type:disc"><strong>sockfd</strong>: Socket file descriptor</li></ul><ul id="19180d7a-0576-80c7-8869-c14b1c233592" class="bulleted-list"><li style="list-style-type:disc"><strong>backlog</strong>: Số lượng kết nối tối đa trong hàng đợi<ul id="19180d7a-0576-80b8-9184-e3384ddcaed3" class="bulleted-list"><li style="list-style-type:circle">Thường từ 5-10 cho ứng dụng nhỏ</li></ul><ul id="19180d7a-0576-80d0-973d-d2fcbde5a496" class="bulleted-list"><li style="list-style-type:circle">Có thể lên đến vài trăm cho server lớn</li></ul></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80b8-92b1-f95e5c05a844" class="code"><code class="language-C">if (listen(sockfd, 5) &lt; 0) {
+    perror(&quot;listen failed&quot;);
+    exit(EXIT_FAILURE);
+}</code></pre><ol type="1" id="19180d7a-0576-80e6-a0ac-cd6b0cd6e885" class="numbered-list" start="4"><li>Accept()</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80b3-aaf3-d711c2c8e84d" class="code"><code class="language-C">int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);</code></pre><ul id="19180d7a-0576-80a8-9600-f0f5cf93a65b" class="bulleted-list"><li style="list-style-type:disc">Chấp nhận kết nối từ client</li></ul><ul id="19180d7a-0576-8036-9635-e4cd5bfbee38" class="bulleted-list"><li style="list-style-type:disc">Block cho đến khi có client kết nối tới</li></ul><ul id="19180d7a-0576-80d8-9286-c40bda6fb367" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-pink"><mark class="highlight-gray_background"><strong>Trả về một socket mới dùng để giao tiếp với client đó</strong></mark></mark></li></ul><ul id="19180d7a-0576-801e-a741-d48f905b7e89" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><mark class="highlight-gray_background"><strong>Socket gốc tiếp tục lắng nghe các kết nối khác</strong></mark></mark></li></ul><h3 id="19180d7a-0576-80d8-91cf-c3edcaeb9ae8" class="">Tham số:</h3><ul id="19180d7a-0576-803c-827d-e6c6fbab3165" class="bulleted-list"><li style="list-style-type:disc"><strong>sockfd</strong>: Listening socket</li></ul><ul id="19180d7a-0576-8064-9cc8-eb4c40e35e66" class="bulleted-list"><li style="list-style-type:disc"><strong>addr</strong>: Lưu thông tin client kết nối đến</li></ul><ul id="19180d7a-0576-8019-902a-c2c5c55c4f23" class="bulleted-list"><li style="list-style-type:disc"><strong>addrlen</strong>: Kích thước của addr</li></ul><h3 id="19180d7a-0576-8085-bf4f-f1fc59d19977" class="">Giá trị trả về:</h3><ul id="19180d7a-0576-8095-b873-e7016a65f88d" class="bulleted-list"><li style="list-style-type:disc">Socket mới để giao tiếp với client</li></ul><ul id="19180d7a-0576-8094-b5bf-f0f4d59d05b0" class="bulleted-list"><li style="list-style-type:disc">Block cho đến khi có kết nối</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80e3-b8a9-ebcd9a3a0ebf" class="code"><code class="language-C">struct sockaddr_in client_addr;
+socklen_t client_len = sizeof(client_addr);
+int new_socket = accept(sockfd, (struct sockaddr *)&amp;client_addr, &amp;client_len);
+if (new_socket &lt; 0) {
+    perror(&quot;accept failed&quot;);
+    exit(EXIT_FAILURE);
+}</code></pre><h3 id="19180d7a-0576-807f-8150-dd07046aed0f" class="">Phía Client(Active Socket)</h3><ol type="1" id="19180d7a-0576-801b-909e-e851eabffc3c" class="numbered-list" start="1"><li>Tạo socket</li></ol><ul id="19180d7a-0576-8051-b668-f75e7e77981d" class="bulleted-list"><li style="list-style-type:disc">Tương tự như server, tạo socket mới</li></ul><ul id="19180d7a-0576-8052-bfd8-e54581a14eba" class="bulleted-list"><li style="list-style-type:disc">Không cần bind() vì hệ thống sẽ tự động chọn port</li></ul><ol type="1" id="19180d7a-0576-8010-a381-cc2a87bb5cb5" class="numbered-list" start="2"><li>connect()</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8040-96be-c89b7c54b8d2" class="code"><code class="language-C">int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);</code></pre><ul id="19180d7a-0576-80da-a685-d6d2e07fad22" class="bulleted-list"><li style="list-style-type:disc">Kết nối đến server</li></ul><ul id="19180d7a-0576-8068-8dde-f8893192720e" class="bulleted-list"><li style="list-style-type:disc"><code>addr</code>: Địa chỉ của server cần kết nối tới</li></ul><ul id="19180d7a-0576-8030-b400-ef4e3ad2f927" class="bulleted-list"><li style="list-style-type:disc">Block cho đến khi kết nối thành công hoặc thất bại</li></ul><h3 id="19180d7a-0576-802c-bb29-c6a475ebcb33" class="">Tham số:</h3><ul id="19180d7a-0576-80d2-9fa0-e210f28bb2ae" class="bulleted-list"><li style="list-style-type:disc"><strong>sockfd</strong>: Socket client</li></ul><ul id="19180d7a-0576-80fe-85d6-d5528add24aa" class="bulleted-list"><li style="list-style-type:disc"><strong>addr</strong>: Thông tin server cần kết nối</li></ul><ul id="19180d7a-0576-8054-af7d-e9bc8b91e8cc" class="bulleted-list"><li style="list-style-type:disc"><strong>addrlen</strong>: Kích thước của addr</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80f9-80ef-c055928a61c4" class="code"><code class="language-C">struct sockaddr_in server_addr;
+server_addr.sin_family = AF_INET;
+server_addr.sin_port = htons(8080);
+inet_pton(AF_INET, &quot;127.0.0.1&quot;, &amp;server_addr.sin_addr);
+
+if (connect(sockfd, (struct sockaddr *)&amp;server_addr, sizeof(server_addr)) &lt; 0) {
+    perror(&quot;connection failed&quot;);
+    exit(EXIT_FAILURE);
+}</code></pre><h3 id="19180d7a-0576-80b5-b078-f16ec9ce4260" class="">Trao đổi dữ liệu</h3><p id="19180d7a-0576-80f4-bf32-c9320088432f" class=""><strong>read() / write()</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80fd-a3c0-d85bfe37c758" class="code"><code class="language-C">ssize_t read(int fd, void *buf, size_t count);
+ssize_t write(int fd, const void *buf, size_t count);</code></pre><ul id="19180d7a-0576-80d3-913a-f045134a9179" class="bulleted-list"><li style="list-style-type:disc">Sau khi kết nối, cả hai bên có thể trao đổi dữ liệu</li></ul><ul id="19180d7a-0576-80b0-8968-f77bc7995887" class="bulleted-list"><li style="list-style-type:disc"><code>read()</code>: Đọc dữ liệu từ socket</li></ul><ul id="19180d7a-0576-8081-91f2-d1b8f9c534b2" class="bulleted-list"><li style="list-style-type:disc"><code>write()</code>: Ghi dữ liệu vào socket</li></ul><ul id="19180d7a-0576-8065-9627-f60034308330" class="bulleted-list"><li style="list-style-type:disc">Có thể sử dụng nhiều lần để trao đổi dữ liệu</li></ul><h3 id="19180d7a-0576-80ec-9199-e37dff894f79" class="">Tham số:</h3><ul id="19180d7a-0576-80ee-b470-e89272d634d8" class="bulleted-list"><li style="list-style-type:disc"><strong>fd</strong>: Socket descriptor</li></ul><ul id="19180d7a-0576-803a-bf4a-ecf4a2002fe0" class="bulleted-list"><li style="list-style-type:disc"><strong>buf</strong>: Buffer để đọc/ghi dữ liệu</li></ul><ul id="19180d7a-0576-80e4-8a45-d423464d27a9" class="bulleted-list"><li style="list-style-type:disc"><strong>count</strong>: Số byte muốn đọc/ghi</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8058-9298-ed5e3a358005" class="code"><code class="language-C">char buffer[1024] = {0};
+// Đọc dữ liệu
+ssize_t bytes_read = read(new_socket, buffer, sizeof(buffer));
+if (bytes_read &lt; 0) {
+    perror(&quot;read failed&quot;);
+}
+
+// Ghi dữ liệu
+const char *message = &quot;Hello Client!&quot;;
+ssize_t bytes_sent = write(new_socket, message, strlen(message));
+if (bytes_sent &lt; 0) {
+    perror(&quot;write failed&quot;);
+}</code></pre><h3 id="19180d7a-0576-809e-9e33-ca66d4cd823e" class="">Đóng socket</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80d9-8d71-f5f224e3c42d" class="code"><code class="language-C">int close(int fd);</code></pre><h3 id="19180d7a-0576-80b6-9e67-d2cd71fa5139" class="">Tham số:</h3><ul id="19180d7a-0576-806a-b82e-d5877f586ec0" class="bulleted-list"><li style="list-style-type:disc"><strong>fd</strong>: Socket cần đóng</li></ul><h3 id="19180d7a-0576-802e-a142-cbab3927591c" class="">Chat Application</h3><p id="19180d7a-0576-8049-b2c0-e7abd0088edc" class="">Server</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8030-b6f8-cdc33ac8c12d" class="code"><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;     //  Chứa cấu trúc cần thiết cho socket. 
+#include &lt;netinet/in.h&gt;     //  Thư viện chứa các hằng số, cấu trúc khi sử dụng địa chỉ trên internet
+#include &lt;arpa/inet.h&gt;
+#include &lt;unistd.h&gt;
+
+#define LISTEN_BACKLOG 50
+#define BUFF_SIZE 256
+
+#define handle_error(msg) \
+	do{perror(msg);exit(EXIT_FAILURE);}while(0)
+
+
+void chat_Function(int new_socket_fd)
+{
+    int numb_read,numb_write;
+    char sendBuffer[BUFF_SIZE];
+    char recevBuffer[BUFF_SIZE];
+    while (1)
+    {
+        /* code */
+        memset(sendBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        memset(recevBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        numb_read = read(new_socket_fd,recevBuffer,BUFF_SIZE);
+        if(numb_read==-1)
+        {
+            handle_error(&quot;read()&quot;);
+        }
+        if(strncmp(&quot;exit&quot;,recevBuffer,4)==0)
+        {
+            system(&quot;clear&quot;);
+            break;
+        }
+        printf(&quot;\nMessage from Client: %s\n&quot;,recevBuffer);
+        printf(&quot;\nPlease respone the message: &quot;);
+        fgets(sendBuffer,BUFF_SIZE,stdin);
+        numb_write = write(new_socket_fd,sendBuffer,sizeof(sendBuffer));
+        if(numb_read==-1)
+        {
+            handle_error(&quot;write()&quot;);
+        }
+        if(strncmp(&quot;exit&quot;,recevBuffer,4)==0)
+        {
+            system(&quot;clear&quot;);
+            break;
+        }
+        sleep(2);
+
+    }
+    close(new_socket_fd);
+}
+
+int main(int argc, char* argv[])
+{
+    int server_fd, new_socket_fd;
+    int port_no,len,opt;
+    struct sockaddr_in serv_addr, client_addr;
+    
+    if(argc &lt; 2)
+    {
+        printf(&quot;\nNo port provided\ncommand: ./sever &lt;port number&gt;\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    else{
+        port_no = atoi(argv[1]);
+    }
+    memset(&amp;serv_addr,0,sizeof(serv_addr));
+    memset(&amp;client_addr,0,sizeof(client_addr));
+
+    server_fd = socket(AF_INET,SOCK_STREAM,0);
+
+    if(server_fd ==-1)
+    {
+        handle_error(&quot;socket()&quot;);
+    }
+
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &amp;opt, sizeof(opt)))
+    {  
+        handle_error(&quot;setsockopt()&quot;); 
+    
+    } 
+
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(port_no);
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+
+    if(bind(server_fd,(struct sockaddr*)&amp;serv_addr,sizeof(serv_addr))==-1)
+    {
+        handle_error(&quot;bind()&quot;); 
+    }
+
+    if(listen(server_fd,LISTEN_BACKLOG)==-1)
+    {
+        handle_error(&quot;listen()&quot;); 
+
+    }
+
+    len = sizeof(client_addr);
+    while(1)
+    {
+        printf(&quot;\nServier is listening at port: %d\n.......\n&quot;,port_no);
+        new_socket_fd = accept(server_fd,(struct sockaddr*)&amp;client_addr,(socklen_t*)&amp;len);
+        if(new_socket_fd==-1)
+        {
+            handle_error(&quot;accept()&quot;);
+            system(&quot;clear&quot;);
+        }  
+        printf(&quot;\nServer: got connetion\n&quot;);
+        chat_Function(new_socket_fd);
+    }
+    close(server_fd);
+}
+</code></pre><p id="19180d7a-0576-8051-a343-df748d738b69" class="">
+</p><p id="19180d7a-0576-80af-be2e-d4807a9db8de" class="">Client</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80f6-b0c0-fb581a64980a" class="code"><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;sys/socket.h&gt;     //  Chứa cấu trúc cần thiết cho socket. 
+#include &lt;netinet/in.h&gt;     //  Thư viện chứa các hằng số, cấu trúc khi sử dụng địa chỉ trên internet
+#include &lt;arpa/inet.h&gt;
+#include &lt;unistd.h&gt;
+
+#define LISTEN_BACKLOG 50
+#define BUFF_SIZE 256
+#define handle_error(msg) \
+	do{perror(msg);exit(EXIT_FAILURE);}while(0)
+
+void chat_Function(int server_fd)
+{
+    int numb_read,numb_write;
+    char sendBuffer[BUFF_SIZE];
+    char recevBuffer[BUFF_SIZE];
+    while (1)
+    {
+        /* code */
+        memset(sendBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        memset(recevBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        printf(&quot;\nPlease enter the message: &quot;);
+        fgets(sendBuffer,BUFF_SIZE,stdin);
+        numb_write = write(server_fd,sendBuffer,sizeof(sendBuffer));
+
+        if(numb_write==-1)
+        {
+            handle_error(&quot;write()&quot;);
+        }
+        if(strncmp(&quot;exit&quot;,sendBuffer,4)==0)
+        {
+            printf(&quot;\nClient exit...\n&quot;);
+            break;
+        }
+
+        numb_read = read(server_fd,recevBuffer,sizeof(recevBuffer));
+        if(numb_read==-1)
+        {
+            handle_error(&quot;write()&quot;);
+        }
+        if(strncmp(&quot;exit&quot;,recevBuffer,4)==0)
+        {
+            printf(&quot;\nServer exit...\n&quot;);
+            break;
+        }
+        printf(&quot;\nMessage from server: %s\n&quot;,recevBuffer);
+        sleep(2);
+
+    }
+    close(server_fd);
+}
+
+int main(int argc, char* argv[])
+{
+    int server_fd;
+    int port_no;
+    struct sockaddr_in server_addr;
+    
+    memset(&amp;server_addr,&#x27;0&#x27;,sizeof(server_addr));
+    if(argc &lt; 3)
+    {
+        printf(&quot;\nCommand: ./client &lt;server address&gt; &lt;port number&gt;\n&quot;);
+        exit(1);
+    }
+    else{
+        port_no = atoi(argv[2]);
+    }
+
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(port_no);
+    if(inet_pton(AF_INET,argv[1],&amp;server_addr.sin_addr)==-1)
+    {
+        handle_error(&quot;inet_pton()&quot;);
+    }
+
+    server_fd = socket(AF_INET,SOCK_STREAM,0);
+    if(server_fd==-1)
+    {
+        handle_error(&quot;socket()&quot;);
+    }
+    if(connect(server_fd,(struct sockaddr*)&amp;server_addr,sizeof(server_addr))==-1)
+    {
+        handle_error(&quot;connect()&quot;);
+    }
+    chat_Function(server_fd);
+    return 0;
+}</code></pre><h3 id="19180d7a-0576-80fd-a6d1-d6f2b5e9f944" class="">Giải thích code </h3><h3 id="19180d7a-0576-80a2-9945-f199c38c210a" class="">Server</h3><ol type="1" id="19180d7a-0576-806f-ab00-eab4a877bee8" class="numbered-list" start="1"><li>Khai báo biến cơ bản</li></ol><ul id="19180d7a-0576-8037-87d6-f80f93e38509" class="bulleted-list"><li style="list-style-type:disc">Khai báo fd để khi khởi tạo socket sẽ trả về số nguyên trong bảng file descriptor</li></ul><ul id="19180d7a-0576-8072-a204-fdeb8fc15930" class="bulleted-list"><li style="list-style-type:disc">khai báo biến để lưu port được truyền vào</li></ul><ul id="19180d7a-0576-80ce-8bbf-dc593108eb4d" class="bulleted-list"><li style="list-style-type:disc">len để lưu địa chỉ client</li></ul><ul id="19180d7a-0576-805d-abca-e36f3bff9326" class="bulleted-list"><li style="list-style-type:disc">sockaddr_in một struct để cấu hình địa chỉ cho server</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-801a-b929-d6d84c2c0ef0" class="code"><code class="language-C">int server_fd, new_socket_fd;
+int port_no,len,opt;
+struct sockaddr_in serv_addr, client_addr;</code></pre><ol type="1" id="19180d7a-0576-8071-aaa0-d8ab57277ffe" class="numbered-list" start="2"><li>Check Port truyền vào</li></ol><ul id="19180d7a-0576-80e2-bb34-f6a431524e1b" class="bulleted-list"><li style="list-style-type:disc">Nếu argc mà nhỏ hơn 2 tức là chưa được truyền port vào</li></ul><ul id="19180d7a-0576-8099-bff2-cd0b81f6dcac" class="bulleted-list"><li style="list-style-type:disc">Người lại thì lấy thông tin được truyền bằng cách đọc argv[1]</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8054-8e2e-c4f10e1a4480" class="code"><code class="language-C">if(argc &lt; 2)
+    {
+        printf(&quot;\nNo port provided\ncommand: ./sever &lt;port number&gt;\n&quot;);
+        exit(EXIT_FAILURE);
+    }
+    else{
+        port_no = atoi(argv[1]);
+    }</code></pre><ol type="1" id="19180d7a-0576-803d-ac0e-d6f7166159ce" class="numbered-list" start="3"><li>Cấp phát và khởi tạo bộ nhớ</li></ol><ul id="19180d7a-0576-80e4-a02e-cfeb1b89d009" class="bulleted-list"><li style="list-style-type:disc">Cấp phát bộ nhớ cho struct serv_addr, client_addr </li></ul><ul id="19180d7a-0576-8051-8baf-dea02603128e" class="bulleted-list"><li style="list-style-type:disc">Khởi tạo các thành phần trong struct với giá trị ban đầu là 0</li></ul><ul id="19180d7a-0576-8015-8948-fae28895a03c" class="bulleted-list"><li style="list-style-type:disc"> Kích thước</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8017-a4b1-c928458cca3e" class="code"><code class="language-C">memset(&amp;serv_addr,0,sizeof(serv_addr));
+
+memset(&amp;client_addr,0,sizeof(client_addr));
+</code></pre><ol type="1" id="19180d7a-0576-8064-b6eb-e514db786418" class="numbered-list" start="4"><li>Tạo Socket cho server </li></ol><ul id="19180d7a-0576-805c-8b02-d2e17fd2ba23" class="bulleted-list"><li style="list-style-type:disc">Tạo Socket và trả về là một số nguyên đại diện cho index của file descriptor của socket file ta mới tạo ra. S<strong>ocket file descriptor</strong> là một số nguyên dùng để đại diện cho một socket, tương tự như cách mà file descriptor được sử dụng để tham chiếu đến các tệp tin thông thường<br/><br/><br/></li></ul><ul id="19180d7a-0576-8020-8986-e680c36244cf" class="bulleted-list"><li style="list-style-type:disc">Cấu hình domain là AF_INET, Type là Stream và protocol là 0</li></ul><ul id="19180d7a-0576-800f-9437-d3292f97dbac" class="bulleted-list"><li style="list-style-type:disc">Nếu tạo thành công thì fd trả về sẽ là số nguyên khác -1</li></ul><p id="19180d7a-0576-80be-a22c-cccd7e6f39ee" class="">
+</p><figure id="19180d7a-0576-80fe-a3c5-c81d7f074d40" class="image"><a href="image%206.png"><img style="width:497px" src="image%206.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80b1-9963-f187708c1d4f" class="code"><code class="language-C">server_fd = socket(AF_INET,SOCK_STREAM,0);
+if(server_fd ==-1)
+    {
+        handle_error(&quot;socket()&quot;);
+    }
+		//cho phép tái sử dụng IP và Port, opt=1 có nghĩa là ta enable các tùy chọn trên
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &amp;opt, sizeof(opt)))
+    {  
+        handle_error(&quot;setsockopt()&quot;); 
+    
+    } 
+</code></pre><ol type="1" id="19180d7a-0576-8012-9f9e-eba91b37ae61" class="numbered-list" start="5"><li>Cấu hình address và port cho server</li></ol><ul id="19180d7a-0576-8086-9814-f3069a743f2d" class="bulleted-list"><li style="list-style-type:disc">Trong struct sockaddr có các type ta truy cập để cấu hình theo ý muốn.</li></ul><ul id="19180d7a-0576-80b1-8d9e-fbbd99402089" class="bulleted-list"><li style="list-style-type:disc">serv_addr.sin_port là lấy port từ port_no mà người dùng nhập vòa để chuyển đổi port về dạng network byte order</li></ul><ul id="19180d7a-0576-8021-9c4c-e315bc02344d" class="bulleted-list"><li style="list-style-type:disc">INADDR_ANY để socket lắng nghe trên tất cả các IP</li></ul><ul id="19180d7a-0576-801a-b94d-fe4a3fbce033" class="bulleted-list"><li style="list-style-type:disc">Thực hiện gán địa chỉ IP đã và port cụ thể cho socket giúp xác định là socket sẽ lắng nghe trên IP và port nào.</li></ul><ul id="19180d7a-0576-80c7-99a9-c954a6083cc3" class="bulleted-list"><li style="list-style-type:disc">Truyền vào file descreptor của socket</li></ul><ul id="19180d7a-0576-8089-834a-c733e9fbba7e" class="bulleted-list"><li style="list-style-type:disc">Con trỏ đến struct sockaddr ta đã cấu hình IP và port ở trên</li></ul><ul id="19180d7a-0576-8001-ba01-cff791e5ba4f" class="bulleted-list"><li style="list-style-type:disc">Kích thước của addr</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80cb-97e1-e6f87da3f8aa" class="code"><code class="language-C"> 		serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(port_no);
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+
+    if(bind(server_fd,(struct sockaddr*)&amp;serv_addr,sizeof(serv_addr))==-1)
+    {
+        handle_error(&quot;bind()&quot;); 
+    }</code></pre><ol type="1" id="19180d7a-0576-8091-adc4-d439bed8f5d2" class="numbered-list" start="6"><li>Listen </li></ol><ul id="19180d7a-0576-80a7-b9f7-fabe5776d842" class="bulleted-list"><li style="list-style-type:disc">Thực hiện nghe để chuẩn bị nhận kết nối từ client</li></ul><ul id="19180d7a-0576-8007-9b99-c287b76b237a" class="bulleted-list"><li style="list-style-type:disc">Truyền vào số index của file server_fd, và số lượng client giới hạn</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80a0-96f6-f257081f473f" class="code"><code class="language-C">if(listen(server_fd,LISTEN_BACKLOG)==-1)
+    {
+        handle_error(&quot;listen()&quot;); 
+
+    }</code></pre><ol type="1" id="19180d7a-0576-805e-8c5f-faa99b55fc53" class="numbered-list" start="7"><li>Accept</li></ol><ul id="19180d7a-0576-809a-b8b4-e0482d7b1c5b" class="bulleted-list"><li style="list-style-type:disc">Khi một client cố gắng kết nối thì server sẽ tạo ra một socket mới để xử lý kết nối đó còn cái socket mà tạo ra trước đó chỉ để lắng nghe các client khác xem con nào muốn kết nối nữa không</li></ul><ul id="19180d7a-0576-80ac-906d-fac17fca1b5a" class="bulleted-list"><li style="list-style-type:disc">Hàm <code>accept()</code> được sử dụng trong lập trình socket trên Linux để <strong>chấp nhận một kết nối đến</strong> từ client trên một socket đang lắng nghe (đã gọi <code>listen()</code>). Khi một client yêu cầu kết nối đến server, <code>accept()</code> sẽ tạo một socket mới để xử lý kết nối này, cho phép server tiếp tục lắng nghe các kết nối khác trên socket ban đầu.</li></ul><ul id="19180d7a-0576-800e-969f-f3d8f609072d" class="bulleted-list"><li style="list-style-type:disc">Truyền vào file desciptor</li></ul><ul id="19180d7a-0576-80cf-897a-c9c2d6948e57" class="bulleted-list"><li style="list-style-type:disc">Địa chỉ của client kết nối, kích thước của địa chỉ client đó</li></ul><ul id="19180d7a-0576-80dd-ad6d-d32815fb3cff" class="bulleted-list"><li style="list-style-type:disc">Nếu thành công thì sẽ trả về số nguyên của một file descriptor socket mới để thực hiện giao tiếp</li></ul><ul id="19180d7a-0576-80f2-8e2d-cd34f99727a9" class="bulleted-list"><li style="list-style-type:disc">Giao tiếp xong thì phải đóng file desciptor lại<br/><br/></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8053-9c85-f2c8b2ee87ff" class="code"><code class="language-C">len = sizeof(client_addr);
+    while(1)
+    {
+        printf(&quot;\nServier is listening at port: %d\n.......\n&quot;,port_no);
+        new_socket_fd = accept(server_fd,(struct sockaddr*)&amp;client_addr,(socklen_t*)&amp;len);
+        if(new_socket_fd==-1)
+        {
+            handle_error(&quot;accept()&quot;);
+            system(&quot;clear&quot;);
+        }  
+        printf(&quot;\nServer: got connetion\n&quot;);
+        chat_Function(new_socket_fd);
+    }
+    close(server_fd);</code></pre><h3 id="19180d7a-0576-802f-ba26-c2e71f809c98" class="">Hàm phục vụ chat giữa các client và server</h3><p id="19180d7a-0576-802c-9a07-e3f19d6b6196" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8008-9f9b-ca076f89f6f6" class="code"><code class="language-C">void chat_Function(int new_socket_fd)
+{
+    //Khai báo các biến kiểu int để lưu trữ index file descriptor của việc đọc và ghi
+    int numb_read,numb_write;
+    //Khai báo các buffer để lưu dữ liệu trong lúc đọc và ghi
+    char sendBuffer[BUFF_SIZE];
+    char recevBuffer[BUFF_SIZE];
+    while (1)
+    {
+        //cấp phát bộ nhớ và khởi tạo cho các buffer
+        memset(sendBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        memset(recevBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        //thực hiện đọc từ socket giao tiếp giữa server và client
+        //truyền vào file description
+        //buffer để nhận dữ liệu
+        numb_read = read(new_socket_fd,recevBuffer,BUFF_SIZE);
+        //read trả về index của file descriptor là số nguyên khác -1 
+        if(numb_read==-1)
+        {
+            handle_error(&quot;read()&quot;);
+        }
+        //check xem có phải muốn exit không, nếu đúng thì clear và thoát luôn
+        if(strncmp(&quot;exit&quot;,recevBuffer,4)==0)
+        {
+            system(&quot;clear&quot;);
+            break;
+        }
+        //nếu ko phải exit thì in message ra
+        printf(&quot;\nMessage from Client: %s\n&quot;,recevBuffer);
+        //yêu cầu respone
+        printf(&quot;\nPlease respone the message: &quot;);
+        //đợi nhập user nhập và lưu vào sendbuffer
+        fgets(sendBuffer,BUFF_SIZE,stdin);
+        //thực hiện truyền vào hàm write để send đi
+        numb_write = write(new_socket_fd,sendBuffer,sizeof(sendBuffer));
+        //check xem có thực hiện thành công không
+        if(numb_read==-1)
+        {
+            handle_error(&quot;write()&quot;);
+        }
+        //check xem có nhận được exit nữa ko
+        if(strncmp(&quot;exit&quot;,recevBuffer,4)==0)
+        {
+            system(&quot;clear&quot;);
+            break;
+        }
+        sleep(2);
+
+    }
+    close(new_socket_fd);
+}
+</code></pre><h3 id="19180d7a-0576-8005-9d52-d92302d0d792" class="">Client</h3><ol type="1" id="19180d7a-0576-8063-a299-e95176f96bad" class="numbered-list" start="1"><li>Thực hiện khởi tạo </li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-809f-b598-e637206613f6" class="code"><code class="language-C">		//khở tạo biến để lưu index của server file descreptor
+		int server_fd;
+		//lưu port number
+    int port_no;
+    //Khai báo struct server addr
+    struct sockaddr_in server_addr;
+    //cấp phát và khởi tạo ban đầu cho server_addr
+    memset(&amp;server_addr,&#x27;0&#x27;,sizeof(server_addr));
+    //Đọc từ user xem nếu nhập vào &lt; 3 argc thì ko được 
+    //Đưa ra gợi ý cần nhập gì cho user
+    //Cần nhập vào server addr và port number
+    if(argc &lt; 3)
+    {
+        printf(&quot;\nCommand: ./client &lt;server address&gt; &lt;port number&gt;\n&quot;);
+        exit(1);
+    }
+    //Nếu user nhập đúng rồi thì lấy port_no ra
+    else{
+        port_no = atoi(argv[2]);
+    }</code></pre><ol type="1" id="19180d7a-0576-80b1-98f3-d5519dbd37b2" class="numbered-list" start="2"><li>Cấu hình </li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80dc-9368-d56474550e00" class="code"><code class="language-C">    //Cấu hình đúng với địa server mà muốn kết nối
+    server_addr.sin_family = AF_INET;
+    //truyền port number mà người dùng nhập vào
+    server_addr.sin_port = htons(port_no);
+    //thực hiện hàm inet_pton để gán đại chỉ IP của server lấy từ argv[1] vào sin_addr
+    if(inet_pton(AF_INET,argv[1],&amp;server_addr.sin_addr)==-1)
+    {
+        handle_error(&quot;inet_pton()&quot;);
+    }</code></pre><ol type="1" id="19180d7a-0576-8099-8ca5-e74fd431bda0" class="numbered-list" start="3"><li>Tạo socket và yêu cầu connect</li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-8070-ba53-f5044c81b1d8" class="code"><code class="language-C">    //tạo socket để giao tiếp với server
+    server_fd = socket(AF_INET,SOCK_STREAM,0);
+    if(server_fd==-1)
+    {
+        handle_error(&quot;socket()&quot;);
+    }
+    //yêu cầu connect bằng cách truyền server file desceptor
+    //địa chỉ của server
+    if(connect(server_fd,(struct sockaddr*)&amp;server_addr,sizeof(server_addr))==-1)
+    {
+        handle_error(&quot;connect()&quot;);
+    }
+    chat_Function(server_fd);</code></pre><h3 id="19180d7a-0576-80ff-a0ac-dac24cf83183" class="">Chat </h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19180d7a-0576-80c3-8f8a-eec8adefafd0" class="code"><code class="language-C">void chat_Function(int server_fd)
+{
+		//tương tự như server thì client cũng tạo các biến để lưu dữ liệu
+    int numb_read,numb_write;
+    char sendBuffer[BUFF_SIZE];
+    char recevBuffer[BUFF_SIZE];
+    while (1)
+    {
+        //cấp phát và khơi tạo cho các buffer
+        memset(sendBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        memset(recevBuffer,&#x27;0&#x27;,BUFF_SIZE);
+        //yêu cầu nhập message
+        printf(&quot;\nPlease enter the message: &quot;);
+        //đợi nhập
+        fgets(sendBuffer,BUFF_SIZE,stdin);
+        //ghi vào sendbuffer
+        numb_write = write(server_fd,sendBuffer,sizeof(sendBuffer));
+				//check xem có tạo thành công không
+        if(numb_write==-1)
+        {
+            handle_error(&quot;write()&quot;);
+        }
+        //check xem có phải là muốn exit
+        if(strncmp(&quot;exit&quot;,sendBuffer,4)==0)
+        {
+            printf(&quot;\nClient exit...\n&quot;);
+            break;
+        }
+				//thực hiẹn đọc 
+        numb_read = read(server_fd,recevBuffer,sizeof(recevBuffer));
+        if(numb_read==-1)
+        {
+            handle_error(&quot;write()&quot;);
+        }
+        //check xem có phải server muốn exit
+        if(strncmp(&quot;exit&quot;,recevBuffer,4)==0)
+        {
+            printf(&quot;\nServer exit...\n&quot;);
+            break;
+        }
+        //nếu ko phải sever muốn exit thì in message từ server ra
+        printf(&quot;\nMessage from server: %s\n&quot;,recevBuffer);
+        sleep(2);
+    }
+    close(server_fd);
+}
+</code></pre><figure id="19180d7a-0576-801c-a8a4-dc025bc9557d" class="image"><a href="image%207.png"><img style="width:709.9874877929688px" src="image%207.png"/></a></figure><p id="19180d7a-0576-809f-9a28-f195f3bd3ead" class="">Datagram thì nó cứ đẩy đi thôi không cần quan tâm là thằng serve có nhận được hay không. Và server cũng không quan tâm tới client có nhận dược hay không </p><figure id="19180d7a-0576-8097-a584-ce494d5fc33f" class="image"><a href="image%208.png"><img style="width:709.9874877929688px" src="image%208.png"/></a></figure><figure id="19180d7a-0576-8070-a1aa-c247d6fe8dec" class="image"><a href="image%209.png"><img style="width:709.9750366210938px" src="image%209.png"/></a></figure><figure id="19180d7a-0576-806b-b602-c43f07de9f6c" class="image"><a href="image%2010.png"><img style="width:709.9874877929688px" src="image%2010.png"/></a></figure><p id="19180d7a-0576-8018-a1a8-ebda02c1e03d" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
